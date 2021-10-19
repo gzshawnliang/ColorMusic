@@ -1,13 +1,20 @@
 package com.example.springdemo.controllers;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import java.io.IOException;
+
+
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
 
 
 @Controller
@@ -53,8 +62,8 @@ public class UploadController
 
     @RequestMapping(value = "/file/upload", method = RequestMethod.POST)
     //@RequestParam List<MultipartFile> files
-    @ResponseBody
-    public String save(@RequestParam("photo") MultipartFile photo)  {
+
+    public @ResponseBody String save(@RequestParam("photo") MultipartFile photo)  {
         // Save the files
         // for (MultipartFile file : files) {
         // }
@@ -71,7 +80,11 @@ public class UploadController
                 init();
             }
 
-            Files.copy(photo.getInputStream(), root.resolve(photo.getOriginalFilename()));
+            var newFile=root.resolve(photo.getOriginalFilename());
+
+            Files.copy(photo.getInputStream(), newFile);
+
+            MusicService MusicService1 =new MusicService(newFile.toString());
 
             //photo.transferTo(new File("C:\\iso" + photo.getOriginalFilename()));
         }
@@ -106,5 +119,36 @@ public class UploadController
          }
         // Return an empty string to signify success
         return "";
+    }
+
+    @RequestMapping(value = "/file/wav", method = RequestMethod.GET)
+    public @ResponseBody void downloadWav(HttpServletResponse response,@RequestParam("file") String wavFile ) throws IOException {
+
+        userUploadPath = GetUserUploadPath();
+        Path root = Paths.get(userUploadPath);
+
+        File file = new File(root.resolve(wavFile).toString());
+        InputStream in = new FileInputStream(file);
+
+        response.setContentType("audio/wav");
+        response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
+        response.setHeader("Content-Length", String.valueOf(file.length()));
+        FileCopyUtils.copy(in, response.getOutputStream());
+    }
+
+
+    @RequestMapping(value = "/file/midi", method = RequestMethod.GET)
+    public @ResponseBody void downloadMidi(HttpServletResponse response,@RequestParam("file") String midiFile ) throws IOException {
+
+        userUploadPath = GetUserUploadPath();
+        Path root = Paths.get(userUploadPath);
+
+        File file = new File(root.resolve(midiFile).toString());
+        InputStream in = new FileInputStream(file);
+
+        response.setContentType("audio/midi");
+        response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
+        response.setHeader("Content-Length", String.valueOf(file.length()));
+        FileCopyUtils.copy(in, response.getOutputStream());
     }
 }

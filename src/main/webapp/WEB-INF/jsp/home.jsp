@@ -13,30 +13,61 @@
 
     <link href="/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
     <link href="/styles/kendo.material.min.css" rel="stylesheet" type="text/css" />
+    <link href="/styles/bootstrap-player.css" rel="stylesheet">
+
     <script src="/js/jquery.min.js"></script>
     <script src="/js/kendo.web.min.js"></script>
 
+    <script src="/js/bootstrap-player.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.22.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>
+
+
 </head>
 <body>
-测试上传图片 <span>${name}!</span>
+Upload the picture <span>${name}!</span>
 
 <div>
     <input id="photo" name="photo"  type="file" />
+    <div>You can only upload <strong>JPG</strong>, <strong>PNG</strong> files.</div>
 </div>
 <br>
 <div>
-    <img id="img1">
+    <img id="img1" style="max-width: 100%">
+</div>
+<br>
+<div>
+    <audio controls style="width:100%" id="Audio1">
+        <source src="http://localhost:8080/file/wav" type="audio/wav" />
+
+<%--        <source src="http://localhost:8080/file/wav" type="audio/ogg" />--%>
+<%--        <source src="http://www.w3schools.com/html/horse.mp3" type="audio/mpeg" />--%>
+<%--        <a href="http://www.w3schools.com/html/horse.mp3">horse</a>--%>
+    </audio>
+</div>
+
+<div>
+    <midi-player style="width:100%" id="midiPlayer1"
+                 src="https://cdn.jsdelivr.net/gh/cifkao/html-midi-player@2b12128/twinkle_twinkle.mid"
+            sound-font visualizer="#staffVisualizer1">
+    </midi-player>
+
+    <midi-visualizer type="staff" id="staffVisualizer1"
+                     src="https://cdn.jsdelivr.net/gh/cifkao/html-midi-player@2b12128/twinkle_twinkle.mid">
+    </midi-visualizer>
 </div>
 
 <script type="text/javascript">
     $(document).ready(function() {
+        $("#Audio1").hide();
         $("#photo").kendoUpload({
             validation: {
                 allowedExtensions: [".jpg", ".png"],
                 maxFileSize: 1024000,
-                minFileSize: 10240
+                minFileSize: 1024
             },
             multiple: false,
+            // files: "[]",
             async: {
                 saveUrl: "/file/upload",
                 removeUrl: "/file/remove",
@@ -45,23 +76,61 @@
             select: function(e) {
                 var fileInfo = e.files[0];
                 var wrapper = this.wrapper;
-
+                $("#Audio1").hide();
+                $("#Audio1").trigger("pause");
                 setTimeout(function () {
                     addPreview(fileInfo, wrapper);
                 });
             },
             remove: function(e) {
-
+                $("#Audio1").hide();
+                $("#Audio1").trigger("pause");
                 setTimeout(function () {
                     $("#img1").attr("src", "");
                 });
             },
             clear: function(e) {
+                $("#Audio1").hide();
+                $("#Audio1").trigger("pause");
+                setTimeout(function () {
+                    $("#img1").attr("src", "");
+                });
+            },
 
-                    setTimeout(function () {
-                        $("#img1").attr("src", "");
-                    });
-                },
+            error: function(e) {
+                $("#Audio1").hide();
+                $("#Audio1").trigger("pause");
+                setTimeout(function () {
+                    $("#img1").attr("src", "");
+                });
+            },
+            complete: function(e) {
+                console.log("Complete");
+            },
+
+            progress: function(e) {
+                $("#Audio1").hide();
+                $("#Audio1").trigger("pause");
+                //kendoConsole.log("Upload progress :: " + e.percentComplete + "% :: " + getFileInfo(e));
+            },
+
+            success: function(e) {
+                if(e.operation==='upload') {
+                    var fileInfo = e.files[0];
+                    var wavFilename = fileInfo.name.split('.').slice(0, -1).join('.') + ".wav"
+                    var midiFilename = fileInfo.name.split('.').slice(0, -1).join('.') + ".midi"
+                    console.log("Success:" + wavFilename);
+                    console.log("Success:" + midiFilename);
+                    var fileUrl2 = "/file/wav?file=" + wavFilename;
+                    var fileUrl3 = "/file/midi?file=" + midiFilename;
+
+                    // $("#Audio1").attr("src", fileUrl2).trigger("play");
+                    // $("#Audio1").show();
+
+                    $("#midiPlayer1").attr("src", fileUrl3);
+                    $("#staffVisualizer1").attr("src", fileUrl3);
+                }
+            },
 
         });
     });
