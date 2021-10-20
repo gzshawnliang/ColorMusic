@@ -35,36 +35,41 @@
 
 </head>
 <body>
-Upload the picture <span>${name}!</span>
-
 <div>
-    <input id="photo" name="photo"  type="file" />
-    <div>You can only upload <strong>JPG</strong>, <strong>PNG</strong> files.File size from 1kb to 1MB</div>
-</div>
-<br>
-<div>
-    <img id="img1" style="max-width: 100%">
-</div>
-<br>
-<%--<div>--%>
-<%--    <audio controls style="width:100%" id="Audio1">--%>
-<%--        <source src="http://localhost:8080/file/wav" type="audio/wav" />--%>
-<%--&lt;%&ndash;        <source src="http://localhost:8080/file/wav" type="audio/ogg" />&ndash;%&gt;--%>
-<%--&lt;%&ndash;        <source src="http://www.w3schools.com/html/horse.mp3" type="audio/mpeg" />&ndash;%&gt;--%>
-<%--&lt;%&ndash;        <a href="http://www.w3schools.com/html/horse.mp3">horse</a>&ndash;%&gt;--%>
-<%--    </audio>--%>
-<%--</div>--%>
+    <p>Upload the picture <span>${name}!</span></p>
 
-<div>
-    <midi-player style="width:100%;" id="midiPlayer1"
-                 src="https://cdn.jsdelivr.net/gh/cifkao/html-midi-player@2b12128/twinkle_twinkle.mid"
-            >
-    </midi-player>
-<%--    sound-font visualizer="#staffVisualizer1"--%>
 
-<%--    <midi-visualizer type="staff" id="staffVisualizer1"--%>
-<%--                     src="https://cdn.jsdelivr.net/gh/cifkao/html-midi-player@2b12128/twinkle_twinkle.mid">--%>
-<%--    </midi-visualizer>--%>
+    <div>
+        <input id="photo" name="photo"  type="file" />
+        <div>You can only upload <strong>JPG</strong>, <strong>PNG</strong> files.File size from 1kb to 1MB</div>
+    </div>
+    <br>
+    <div style="margin-right: 8px">
+        <midi-player style="width:100%;" id="midiPlayer1"
+                     src="https://cdn.jsdelivr.net/gh/cifkao/html-midi-player@2b12128/twinkle_twinkle.mid"
+        >
+        </midi-player>
+        <%--    sound-font visualizer="#staffVisualizer1"--%>
+
+        <%--    <midi-visualizer type="staff" id="staffVisualizer1"--%>
+        <%--                     src="https://cdn.jsdelivr.net/gh/cifkao/html-midi-player@2b12128/twinkle_twinkle.mid">--%>
+        <%--    </midi-visualizer>--%>
+    </div>
+    <br>
+    <div style="text-align: center">
+        <img id="img1" style="max-width: 100%">
+    </div>
+
+
+    <%--<div>--%>
+    <%--    <audio controls style="width:100%" id="Audio1">--%>
+    <%--        <source src="http://localhost:8080/file/wav" type="audio/wav" />--%>
+    <%--&lt;%&ndash;        <source src="http://localhost:8080/file/wav" type="audio/ogg" />&ndash;%&gt;--%>
+    <%--&lt;%&ndash;        <source src="http://www.w3schools.com/html/horse.mp3" type="audio/mpeg" />&ndash;%&gt;--%>
+    <%--&lt;%&ndash;        <a href="http://www.w3schools.com/html/horse.mp3">horse</a>&ndash;%&gt;--%>
+    <%--    </audio>--%>
+    <%--</div>--%>
+
 </div>
 
 <script type="text/javascript">
