@@ -9,7 +9,7 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>Color Music</title>
 
     <link href="/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
     <link href="/styles/kendo.material.min.css" rel="stylesheet" type="text/css" />

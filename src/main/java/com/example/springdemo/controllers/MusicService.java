@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import java.util.*;
@@ -406,6 +409,10 @@ public class MusicService
         String midiFileName=file.getAbsolutePath().replaceAll("[.][^.]+$", "") +".midi";
         File midiFile = new File(midiFileName);
         MidiFileManager.savePatternToMidi(song, midiFile);
+
+        if(Files.exists(midiFile.toPath()))
+            System.out.println("create file:" + midiFile +" is OK.");
+
         //String wavF=MidiConvertToWav(midiFileName);
 
         //wavFileList.add(wavF);

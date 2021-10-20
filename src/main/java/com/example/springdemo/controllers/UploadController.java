@@ -50,8 +50,8 @@ public class UploadController
 
     }
 
-    public void deleteAll() {
-        Path root = Paths.get(globalUploadPath);
+    public void deleteAll(String path) {
+        Path root = Paths.get(path);
         FileSystemUtils.deleteRecursively(root.toFile());
     }
 
@@ -71,14 +71,19 @@ public class UploadController
         // Return an empty string to signify success
         try
         {
-            System.err.println(new FileSystemResource("").getFile().getAbsolutePath());
+            //System.err.println(new FileSystemResource("").getFile().getAbsolutePath());
             String sessionId = RequestContextHolder.currentRequestAttributes().getSessionId();
-            System.err.println(sessionId);
+            //System.out.println(sessionId);
+
             userUploadPath = GetUserUploadPath();
+            deleteAll(userUploadPath);
+
             Path root = Paths.get(userUploadPath);
             if (!Files.exists(root)) {
                 init();
             }
+
+
 
             var newFile=root.resolve(photo.getOriginalFilename());
 
