@@ -18,9 +18,10 @@
     <script src="/js/jquery.min.js"></script>
     <script src="/js/kendo.web.min.js"></script>
 
-    <script src="/js/bootstrap-player.js"></script>
+<%--    <script src="/js/bootstrap-player.js"></script>--%>
+        <script src="/js/html-midi-player@1.4.0.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.22.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>
+<%--    <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.22.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>--%>
 
 
 </head>
@@ -36,30 +37,31 @@ Upload the picture <span>${name}!</span>
     <img id="img1" style="max-width: 100%">
 </div>
 <br>
-<div>
-    <audio controls style="width:100%" id="Audio1">
-        <source src="http://localhost:8080/file/wav" type="audio/wav" />
+<%--<div>--%>
+<%--    <audio controls style="width:100%" id="Audio1">--%>
+<%--        <source src="http://localhost:8080/file/wav" type="audio/wav" />--%>
+<%--&lt;%&ndash;        <source src="http://localhost:8080/file/wav" type="audio/ogg" />&ndash;%&gt;--%>
+<%--&lt;%&ndash;        <source src="http://www.w3schools.com/html/horse.mp3" type="audio/mpeg" />&ndash;%&gt;--%>
+<%--&lt;%&ndash;        <a href="http://www.w3schools.com/html/horse.mp3">horse</a>&ndash;%&gt;--%>
+<%--    </audio>--%>
+<%--</div>--%>
 
-<%--        <source src="http://localhost:8080/file/wav" type="audio/ogg" />--%>
-<%--        <source src="http://www.w3schools.com/html/horse.mp3" type="audio/mpeg" />--%>
-<%--        <a href="http://www.w3schools.com/html/horse.mp3">horse</a>--%>
-    </audio>
-</div>
-
 <div>
-    <midi-player style="width:100%" id="midiPlayer1"
+    <midi-player style="width:100%;" id="midiPlayer1"
                  src="https://cdn.jsdelivr.net/gh/cifkao/html-midi-player@2b12128/twinkle_twinkle.mid"
-            sound-font visualizer="#staffVisualizer1">
+            >
     </midi-player>
+<%--    sound-font visualizer="#staffVisualizer1"--%>
 
-    <midi-visualizer type="staff" id="staffVisualizer1"
-                     src="https://cdn.jsdelivr.net/gh/cifkao/html-midi-player@2b12128/twinkle_twinkle.mid">
-    </midi-visualizer>
+<%--    <midi-visualizer type="staff" id="staffVisualizer1"--%>
+<%--                     src="https://cdn.jsdelivr.net/gh/cifkao/html-midi-player@2b12128/twinkle_twinkle.mid">--%>
+<%--    </midi-visualizer>--%>
 </div>
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $("#Audio1").hide();
+        //$("#Audio1").hide();
+        $("#midiPlayer1").hide();
         $("#photo").kendoUpload({
             validation: {
                 allowedExtensions: [".jpg", ".png"],
@@ -76,30 +78,36 @@ Upload the picture <span>${name}!</span>
             select: function(e) {
                 var fileInfo = e.files[0];
                 var wrapper = this.wrapper;
-                $("#Audio1").hide();
-                $("#Audio1").trigger("pause");
+                // $("#Audio1").hide();
+                // $("#Audio1").trigger("pause");
                 setTimeout(function () {
                     addPreview(fileInfo, wrapper);
                 });
             },
             remove: function(e) {
-                $("#Audio1").hide();
-                $("#Audio1").trigger("pause");
+                // $("#Audio1").hide();
+                // $("#Audio1").trigger("pause");
+
+                $("#midiPlayer1").hide();
+                //$("#midiPlayer1").trigger("pause");
+
                 setTimeout(function () {
                     $("#img1").attr("src", "");
                 });
             },
             clear: function(e) {
-                $("#Audio1").hide();
-                $("#Audio1").trigger("pause");
+                // $("#Audio1").hide();
+                // $("#Audio1").trigger("pause");
+                $("#midiPlayer1").hide();
+                //$("#midiPlayer1").trigger("pause");
                 setTimeout(function () {
                     $("#img1").attr("src", "");
                 });
             },
 
             error: function(e) {
-                $("#Audio1").hide();
-                $("#Audio1").trigger("pause");
+                // $("#Audio1").hide();
+                // $("#Audio1").trigger("pause");
                 setTimeout(function () {
                     $("#img1").attr("src", "");
                 });
@@ -109,8 +117,8 @@ Upload the picture <span>${name}!</span>
             },
 
             progress: function(e) {
-                $("#Audio1").hide();
-                $("#Audio1").trigger("pause");
+                // $("#Audio1").hide();
+                // $("#Audio1").trigger("pause");
                 //kendoConsole.log("Upload progress :: " + e.percentComplete + "% :: " + getFileInfo(e));
             },
 
@@ -126,9 +134,12 @@ Upload the picture <span>${name}!</span>
 
                     // $("#Audio1").attr("src", fileUrl2).trigger("play");
                     // $("#Audio1").show();
+                    var player = $("#midiPlayer1");
 
                     $("#midiPlayer1").attr("src", fileUrl3);
-                    $("#staffVisualizer1").attr("src", fileUrl3);
+                    //player.src = fileUrl3;
+                    player.show();
+                    //$("#staffVisualizer1").attr("src", fileUrl3);
                 }
             },
 

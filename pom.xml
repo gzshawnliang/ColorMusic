@@ -16,6 +16,12 @@
     <properties>
         <java.version>11</java.version>
     </properties>
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -39,6 +45,20 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.JensPiegsa</groupId>
+            <artifactId>jfugue</artifactId>
+            <version>5.0.9</version>
+        </dependency>
+
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/jfugue/jfugue &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>jfugue</groupId>-->
+<!--            <artifactId>jfugue</artifactId>-->
+<!--            <version>5.0.9</version>-->
+<!--        </dependency>-->
+
     </dependencies>
 
     <build>

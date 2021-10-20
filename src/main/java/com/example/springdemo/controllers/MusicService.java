@@ -406,7 +406,8 @@ public class MusicService
         String midiFileName=file.getAbsolutePath().replaceAll("[.][^.]+$", "") +".midi";
         File midiFile = new File(midiFileName);
         MidiFileManager.savePatternToMidi(song, midiFile);
-        String wavF=MidiConvertToWav(midiFileName);
+        //String wavF=MidiConvertToWav(midiFileName);
+
         //wavFileList.add(wavF);
 
 //        if(wavFileList.isEmpty()==false)
