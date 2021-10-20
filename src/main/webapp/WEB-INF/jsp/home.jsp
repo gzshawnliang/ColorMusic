@@ -7,8 +7,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0" />
     <title>Color Music</title>
 
     <link href="/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
@@ -30,7 +32,7 @@ Upload the picture <span>${name}!</span>
 
 <div>
     <input id="photo" name="photo"  type="file" />
-    <div>You can only upload <strong>JPG</strong>, <strong>PNG</strong> files.</div>
+    <div>You can only upload <strong>JPG</strong>, <strong>PNG</strong> files.File size from 1kb to 1MB</div>
 </div>
 <br>
 <div>
@@ -64,7 +66,7 @@ Upload the picture <span>${name}!</span>
         $("#midiPlayer1").hide();
         $("#photo").kendoUpload({
             validation: {
-                allowedExtensions: [".jpg", ".png"],
+                allowedExtensions: [".jpg",".jpeg", ".png"],
                 maxFileSize: 1024000,
                 minFileSize: 1024
             },
