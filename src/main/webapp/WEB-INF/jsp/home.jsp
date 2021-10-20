@@ -40,6 +40,7 @@
 
 
     <div>
+        <input type="hidden" id="newFileName" name="newFileName" value="5555555555QQ">
         <input id="photo" name="photo"  type="file" />
         <div>You can only upload <strong>JPG</strong>, <strong>PNG</strong> files.File size from 1kb to 1MB</div>
     </div>
@@ -73,6 +74,21 @@
 </div>
 
 <script type="text/javascript">
+
+    function _uuid() {
+        var d = Date.now();
+        if (typeof performance !== 'undefined' && typeof performance.now === 'function'){
+            d += performance.now(); //use high-precision timer if available
+        }
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = (d + Math.random() * 16) % 16 | 0;
+            d = Math.floor(d / 16);
+            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+    }
+
+    var newFileName='';
+
     $(document).ready(function() {
         //$("#Audio1").hide();
         $("#midiPlayer1").hide();
@@ -102,6 +118,7 @@
                 // $("#Audio1").hide();
                 // $("#Audio1").trigger("pause");
 
+                $("#midiPlayer1").attr("src", '');
                 $("#midiPlayer1").hide();
                 //$("#midiPlayer1").trigger("pause");
 
@@ -117,6 +134,11 @@
                 setTimeout(function () {
                     $("#img1").attr("src", "");
                 });
+            },
+
+            upload: function(e) {
+                newFileName=_uuid();
+                e.data = { newName: newFileName };
             },
 
             error: function(e) {
@@ -138,12 +160,15 @@
 
             success: function(e) {
                 if(e.operation==='upload') {
-                    var fileInfo = e.files[0];
-                    var wavFilename = fileInfo.name.split('.').slice(0, -1).join('.') + ".wav"
-                    var midiFilename = fileInfo.name.split('.').slice(0, -1).join('.') + ".midi"
-                    console.log("Success:" + wavFilename);
+                    var filename=newFileName;
+                    var midiFilename = newFileName + ".midi"
+
+                    //var filename = e.files[0].name;
+                    // var wavFilename = filename.split('.').slice(0, -1).join('.') + ".wav"
+                    //var midiFilename = filename.split('.').slice(0, -1).join('.') + ".midi"
+                    //console.log("Success:" + wavFilename);
                     console.log("Success:" + midiFilename);
-                    var fileUrl2 = "/file/wav?file=" + wavFilename;
+                    //var fileUrl2 = "/file/wav?file=" + wavFilename;
                     var fileUrl3 = "/file/midi?file=" + midiFilename;
 
                     // $("#Audio1").attr("src", fileUrl2).trigger("play");

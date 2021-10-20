@@ -8,8 +8,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.io.IOException;
+import java.util.Optional;
 
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -63,12 +66,7 @@ public class UploadController
     @RequestMapping(value = "/file/upload", method = RequestMethod.POST)
     //@RequestParam List<MultipartFile> files
 
-    public @ResponseBody String save(@RequestParam("photo") MultipartFile photo)  {
-        // Save the files
-        // for (MultipartFile file : files) {
-        // }
-
-        // Return an empty string to signify success
+    public @ResponseBody String save(@RequestParam("photo") MultipartFile photo,@RequestParam("newName") String newName)  {
         try
         {
             //System.err.println(new FileSystemResource("").getFile().getAbsolutePath());
@@ -83,9 +81,14 @@ public class UploadController
                 init();
             }
 
+            //FilenameUtils.getExtension photo.getName().
+            var originalName=photo.getOriginalFilename();
+            var ext=Optional.ofNullable(originalName).filter(f -> f.contains("."))
+                .map(f -> f.substring(originalName.lastIndexOf(".") + 1));
 
-
-            var newFile=root.resolve(photo.getOriginalFilename());
+            var newFile=root.resolve(newName + "." + ext.get().toString());
+            //var newFile=root.resolve(photo.getOriginalFilename());
+            //var newFile=root.resolve(newFileName);
 
             Files.copy(photo.getInputStream(), newFile);
 
@@ -104,6 +107,8 @@ public class UploadController
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
 
+        //return ResponseEntity.status(HttpStatus.OK).body("aaaaaaaa");
+
         return "";
     }
 
@@ -111,17 +116,19 @@ public class UploadController
     public @ResponseBody String remove(@RequestParam String[] fileNames) {
         // Remove the files
         userUploadPath = GetUserUploadPath();
-        Path root = Paths.get(userUploadPath);
-         for (String fileName : fileNames) {
-                try {
-                    Files.deleteIfExists(root.resolve(fileName)) ;
-                }
-                catch (Exception e)
-                {
-                    System.err.println(e.toString());
-                    throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
-                }
-         }
+        deleteAll(userUploadPath);
+
+//        Path root = Paths.get(userUploadPath);
+//         for (String fileName : fileNames) {
+//                try {
+//                    Files.deleteIfExists(root.resolve(fileName)) ;
+//                }
+//                catch (Exception e)
+//                {
+//                    System.err.println(e.toString());
+//                    throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
+//                }
+//         }
         // Return an empty string to signify success
         return "";
     }
