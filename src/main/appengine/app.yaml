@@ -1,6 +1,8 @@
 runtime: java11
 
-instance_class: F2
+#https://cloud.google.com/appengine/docs/standard
+#F4:1gb ram cpu 2.4ghz
+instance_class: F4
 
 handlers:
   - url: /.*
