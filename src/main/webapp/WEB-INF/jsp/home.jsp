@@ -100,8 +100,8 @@
 
     function clearMidiPlayer()
     {
+        $("#midiPlayer1")[0].stop();
         $("#midiPlayer1").attr("src", '');
-        $("#midiPlayer1")[0].stop()
         $("#midiPlayer1").hide();
     }
 
@@ -110,6 +110,17 @@
         $("#midiPlayer1").attr("src", url);
         $("#midiPlayer1").show();
     }
+
+    function startMidiPlayer(url)
+    {
+        showMidiPlayer(url);
+
+        setTimeout(function () {
+            $("#midiPlayer1")[0].start();
+        },500);
+
+    }
+
 
     var newFileName='';
 
@@ -139,9 +150,13 @@
                 }
                 else
                 {
+                    $("#midiPlayer1")[0].stop();
                     $("#photo").data("kendoUpload").removeAllFiles();
-                    $("#img1").attr("src", "/images/"+value+".jpg");
-                    showMidiPlayer("/images/"+value+".midi");
+
+                    setTimeout(function () {
+                        $("#img1").attr("src", "/images/"+value+".jpg");
+                        showMidiPlayer("/images/"+value+".midi");
+                    },100);
                 }
 
             },
@@ -237,7 +252,9 @@
                     console.log("Success:" + midiFilename);
                     //var fileUrl2 = "/file/wav?file=" + wavFilename;
                     var fileUrl3 = "/file/midi?file=" + midiFilename;
-                    showMidiPlayer(fileUrl3);
+                    startMidiPlayer(fileUrl3);
+
+                    //showMidiPlayer(fileUrl3);
 
                     // $("#Audio1").attr("src", fileUrl2).trigger("play");
                     // $("#Audio1").show();
