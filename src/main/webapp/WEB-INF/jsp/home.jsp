@@ -28,7 +28,7 @@
     <script src="/js/kendo.web.min.js"></script>
 
 <%--    <script src="/js/bootstrap-player.js"></script>--%>
-        <script src="/js/html-midi-player@1.4.0.js"></script>
+    <script src="/js/html-midi-player@1.4.0.js"></script>
 
 <%--    <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.22.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>--%>
 
@@ -36,14 +36,16 @@
 </head>
 <body>
 <div>
-    <p>Upload the picture <span>${name}!</span></p>
+    <p>Select the painting
+        <input id="painting" value="1" style="width: 100%;" />
+    </p>
 
-
+    Or upload your painting <span>!</span>
     <div>
-        <input type="hidden" id="newFileName" name="newFileName" value="5555555555QQ">
         <input id="photo" name="photo"  type="file" />
-        <div>You can only upload <strong>JPG</strong>, <strong>PNG</strong> files.File size from 1kb to 1MB</div>
+        <div>You can only upload <strong>JPG</strong>, <strong>PNG</strong> files.File size from 1KB to 1MB</div>
     </div>
+
     <br>
     <div style="margin-right: 8px">
         <midi-player style="width:100%;" id="midiPlayer1"
@@ -73,6 +75,13 @@
 
 </div>
 
+
+<%--<script id="template" type="text/x-kendo-template">--%>
+<%--    <span class="k-state-default" style="background-image: url('/images/1.jpg')"></span>--%>
+<%--    <span class="k-state-default" style="padding-left: 15px;"><h3>#:data.text#</h3></span>--%>
+<%--</script>--%>
+
+
 <script type="text/javascript">
 
     function _uuid() {
@@ -89,9 +98,47 @@
 
     var newFileName='';
 
+    var data = [
+        { text: "   ", value: "0" },
+        { text: "Vassily Kandinsky,1923 - Composition 8, huile sur toile,Musée Guggenheim", value: "37025235-6ea3-4c16-a234-71c5b80f4a9e" },
+        { text: "Vassily Kandinsky,1923 - On White II", value: "2c7211e2-c28e-4afa-8102-d72f99176c13" },
+        { text: "Vassily Kandinsky,1923 - Circles in a Circle", value: "14c8817c-cfd4-406e-9c32-2ee6af5a76c5" },
+        { text: "My self-portrait", value: "ce1816c8-858b-44b1-ac08-23030c7e9a10" }
+    ];
+
     $(document).ready(function() {
+
+
+        $("#painting").kendoDropDownList({
+            dataTextField: "text",
+            dataValueField: "value",
+            dataSource: data,
+            // template:kendo.template($("#template").html()),
+            value: "0",
+            change: function(e) {
+                var value = this.value();
+                console.log(value);
+                if(value ==='0'){
+                    $("#img1").attr("src", "");
+                    $("#midiPlayer1").attr("src", '');
+                    $("#midiPlayer1").hide();
+
+                }
+                else
+                {
+                    $("#photo").data("kendoUpload").removeAllFiles();
+                    $("#img1").attr("src", "/images/"+value+".jpg");
+                    $("#midiPlayer1").attr("src", "/images/"+value+".midi");
+                    $("#midiPlayer1").show();
+
+                }
+
+            },
+        });
+
         //$("#Audio1").hide();
         $("#midiPlayer1").hide();
+
         $("#photo").kendoUpload({
             validation: {
                 allowedExtensions: [".jpg",".jpeg", ".png"],
@@ -110,6 +157,10 @@
                 var wrapper = this.wrapper;
                 // $("#Audio1").hide();
                 // $("#Audio1").trigger("pause");
+                var dropdownlist = $("#painting").data("kendoDropDownList");
+                dropdownlist.value("0");
+                $("#midiPlayer1").hide();
+
                 setTimeout(function () {
                     addPreview(fileInfo, wrapper);
                 });
@@ -191,10 +242,9 @@
         if (raw) {
             reader.onloadend = function () {
                 var preview = $("<img class='image-preview'>").attr("src", this.result);
-                $("#img1").attr("src", this.result);
-
                 wrapper.find(".k-file[data-uid='" + file.uid + "'] .k-file-group-wrapper")
                     .replaceWith(preview);
+                $("#img1").attr("src", this.result);
             };
 
             reader.readAsDataURL(raw);
@@ -207,6 +257,72 @@
         position: relative;
         vertical-align: top;
         height: 64px;
+    }
+</style>
+
+
+<style>
+    .k-readonly {
+        color: gray;
+    }
+
+    .selected-value {
+        display: inline-block;
+        vertical-align: middle;
+        width: 24px;
+        height: 24px;
+        background-size: 100%;
+        margin-right: 5px;
+        border-radius: 50%;
+    }
+
+    #painting .k-item {
+        line-height: 1em;
+        min-width: 300px;
+    }
+
+    /* Material Theme padding adjustment*/
+    .k-material #painting .k-item,
+    .k-material #painting .k-item.k-state-hover,
+    .k-materialblack #painting .k-item,
+    .k-materialblack #painting .k-item.k-state-hover {
+        padding-left: 5px;
+        border-left: 0;
+    }
+
+    #painting .k-item > span {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        vertical-align: middle;
+        display: table-cell;
+        vertical-align: central;
+        margin: 10px 10px 10px 5px;
+    }
+
+    #painting .k-item > span:first-child {
+        -moz-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+        -webkit-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+        box-shadow: inset 0 0 30px rgba(0,0,0,.3);
+        margin: 10px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-size: 100%;
+        background-repeat: no-repeat;
+    }
+
+    #painting h3 {
+        font-size: 1.2em;
+        font-weight: normal;
+        margin: 0 0 1px 0;
+        padding: 0;
+    }
+
+    #painting p {
+        margin: 0;
+        padding: 0;
+        font-size: .8em;
     }
 </style>
 
