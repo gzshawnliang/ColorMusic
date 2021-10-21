@@ -170,6 +170,7 @@
                 // $("#Audio1").trigger("pause");
 
                 $("#midiPlayer1").attr("src", '');
+                $("#midiPlayer1")[0].stop()
                 $("#midiPlayer1").hide();
                 //$("#midiPlayer1").trigger("pause");
 
