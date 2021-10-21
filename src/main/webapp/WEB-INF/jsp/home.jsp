@@ -98,6 +98,19 @@
         });
     }
 
+    function clearMidiPlayer()
+    {
+        $("#midiPlayer1").attr("src", '');
+        $("#midiPlayer1")[0].stop()
+        $("#midiPlayer1").hide();
+    }
+
+    function showMidiPlayer(url)
+    {
+        $("#midiPlayer1").attr("src", url);
+        $("#midiPlayer1").show();
+    }
+
     var newFileName='';
 
     var data = [
@@ -122,22 +135,20 @@
                 console.log(value);
                 if(value ==='0') {
                     $("#img1").attr("src", "");
-                    $("#midiPlayer1").attr("src", '');
-                    $("#midiPlayer1").hide();
+                    clearMidiPlayer();
                 }
                 else
                 {
                     $("#photo").data("kendoUpload").removeAllFiles();
                     $("#img1").attr("src", "/images/"+value+".jpg");
-                    $("#midiPlayer1").attr("src", "/images/"+value+".midi");
-                    $("#midiPlayer1").show();
+                    showMidiPlayer("/images/"+value+".midi");
                 }
 
             },
         });
 
         //$("#Audio1").hide();
-        $("#midiPlayer1").hide();
+        clearMidiPlayer();
 
         $("#photo").kendoUpload({
             validation: {
@@ -159,7 +170,9 @@
                 // $("#Audio1").trigger("pause");
                 var dropdownlist = $("#painting").data("kendoDropDownList");
                 dropdownlist.value("0");
-                $("#midiPlayer1").hide();
+
+                clearMidiPlayer();
+
 
                 setTimeout(function () {
                     addPreview(fileInfo, wrapper);
@@ -169,9 +182,7 @@
                 // $("#Audio1").hide();
                 // $("#Audio1").trigger("pause");
 
-                $("#midiPlayer1").attr("src", '');
-                $("#midiPlayer1")[0].stop()
-                $("#midiPlayer1").hide();
+                clearMidiPlayer();
                 //$("#midiPlayer1").trigger("pause");
 
                 setTimeout(function () {
@@ -181,8 +192,11 @@
             clear: function(e) {
                 // $("#Audio1").hide();
                 // $("#Audio1").trigger("pause");
-                $("#midiPlayer1").hide();
+                //$("#midiPlayer1").hide();
                 //$("#midiPlayer1").trigger("pause");
+
+                clearMidiPlayer();
+
                 setTimeout(function () {
                     $("#img1").attr("src", "");
                 });
@@ -196,6 +210,7 @@
             error: function(e) {
                 // $("#Audio1").hide();
                 // $("#Audio1").trigger("pause");
+                clearMidiPlayer();
                 setTimeout(function () {
                     $("#img1").attr("src", "");
                 });
@@ -222,14 +237,19 @@
                     console.log("Success:" + midiFilename);
                     //var fileUrl2 = "/file/wav?file=" + wavFilename;
                     var fileUrl3 = "/file/midi?file=" + midiFilename;
+                    showMidiPlayer(fileUrl3);
 
                     // $("#Audio1").attr("src", fileUrl2).trigger("play");
                     // $("#Audio1").show();
-                    var player = $("#midiPlayer1");
 
-                    $("#midiPlayer1").attr("src", fileUrl3);
+
+
+                    // var player = $("#midiPlayer1");
+
+
+                    // $("#midiPlayer1").attr("src", fileUrl3);
                     //player.src = fileUrl3;
-                    player.show();
+                    // player.show();
                     //$("#staffVisualizer1").attr("src", fileUrl3);
                 }
             },
