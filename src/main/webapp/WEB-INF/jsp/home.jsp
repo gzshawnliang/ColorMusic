@@ -77,8 +77,8 @@
 
 
 <%--<script id="template" type="text/x-kendo-template">--%>
-<%--    <span class="k-state-default" style="background-image: url('/images/1.jpg')"></span>--%>
-<%--    <span class="k-state-default" style="padding-left: 15px;"><h3>#:data.text#</h3></span>--%>
+<%--    <span class="k-state-default" style="background-image: url('/images/2c7211e2-c28e-4afa-8102-d72f99176c13.jpg')"></span>--%>
+<%--    <span class="k-state-default" style="padding-left: 15px;"><h5>#:data.text#</h5></span>--%>
 <%--</script>--%>
 
 
@@ -113,16 +113,15 @@
             dataTextField: "text",
             dataValueField: "value",
             dataSource: data,
-            // template:kendo.template($("#template").html()),
+            // valueTemplate:kendo.template($("#template").html()),
             value: "0",
             change: function(e) {
                 var value = this.value();
                 console.log(value);
-                if(value ==='0'){
+                if(value ==='0') {
                     $("#img1").attr("src", "");
                     $("#midiPlayer1").attr("src", '');
                     $("#midiPlayer1").hide();
-
                 }
                 else
                 {
@@ -130,7 +129,6 @@
                     $("#img1").attr("src", "/images/"+value+".jpg");
                     $("#midiPlayer1").attr("src", "/images/"+value+".midi");
                     $("#midiPlayer1").show();
-
                 }
 
             },
@@ -260,71 +258,6 @@
     }
 </style>
 
-
-<style>
-    .k-readonly {
-        color: gray;
-    }
-
-    .selected-value {
-        display: inline-block;
-        vertical-align: middle;
-        width: 24px;
-        height: 24px;
-        background-size: 100%;
-        margin-right: 5px;
-        border-radius: 50%;
-    }
-
-    #painting .k-item {
-        line-height: 1em;
-        min-width: 300px;
-    }
-
-    /* Material Theme padding adjustment*/
-    .k-material #painting .k-item,
-    .k-material #painting .k-item.k-state-hover,
-    .k-materialblack #painting .k-item,
-    .k-materialblack #painting .k-item.k-state-hover {
-        padding-left: 5px;
-        border-left: 0;
-    }
-
-    #painting .k-item > span {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        vertical-align: middle;
-        display: table-cell;
-        vertical-align: central;
-        margin: 10px 10px 10px 5px;
-    }
-
-    #painting .k-item > span:first-child {
-        -moz-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
-        -webkit-box-shadow: inset 0 0 30px rgba(0,0,0,.3);
-        box-shadow: inset 0 0 30px rgba(0,0,0,.3);
-        margin: 10px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background-size: 100%;
-        background-repeat: no-repeat;
-    }
-
-    #painting h3 {
-        font-size: 1.2em;
-        font-weight: normal;
-        margin: 0 0 1px 0;
-        padding: 0;
-    }
-
-    #painting p {
-        margin: 0;
-        padding: 0;
-        font-size: .8em;
-    }
-</style>
 
 </body>
 </html>
