@@ -124,6 +124,7 @@
 
     var newFileName='';
 
+    //todo 增加png支持
     var data = [
         { text: "   ", value: "0" },
         { text: "Vassily Kandinsky,1923 - Composition 8, huile sur toile,Musée Guggenheim", value: "37025235-6ea3-4c16-a234-71c5b80f4a9e" },
