@@ -52,6 +52,7 @@
                      src="https://cdn.jsdelivr.net/gh/cifkao/html-midi-player@2b12128/twinkle_twinkle.mid"
         >
         </midi-player>
+<%--        <midi-visualizer type="piano-roll" id="myVisualizer"></midi-visualizer>--%>
     </div>
     <br>
     <div style="text-align: center">

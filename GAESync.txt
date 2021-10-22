@@ -1,0 +1,3 @@
+
+执行一下命令上传到google app engine
+gcloud app deploy
