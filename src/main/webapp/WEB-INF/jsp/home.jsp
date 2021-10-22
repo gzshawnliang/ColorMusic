@@ -24,15 +24,13 @@
 
     <link href="/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
     <link href="/styles/kendo.material.min.css" rel="stylesheet" type="text/css" />
-    <link href="/styles/bootstrap-player.css" rel="stylesheet">
+<%--    <link href="/styles/bootstrap-player.css" rel="stylesheet">--%>
 
     <script src="/js/jquery.min.js"></script>
     <script src="/js/kendo.web.min.js"></script>
 
 <%--    <script src="/js/bootstrap-player.js"></script>--%>
     <script src="/js/html-midi-player@1.4.0.js"></script>
-
-<%--    <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.22.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>--%>
 
 
 </head>
@@ -54,11 +52,6 @@
                      src="https://cdn.jsdelivr.net/gh/cifkao/html-midi-player@2b12128/twinkle_twinkle.mid"
         >
         </midi-player>
-        <%--    sound-font visualizer="#staffVisualizer1"--%>
-
-        <%--    <midi-visualizer type="staff" id="staffVisualizer1"--%>
-        <%--                     src="https://cdn.jsdelivr.net/gh/cifkao/html-midi-player@2b12128/twinkle_twinkle.mid">--%>
-        <%--    </midi-visualizer>--%>
     </div>
     <br>
     <div style="text-align: center">
@@ -66,14 +59,7 @@
     </div>
 
 
-    <%--<div>--%>
-    <%--    <audio controls style="width:100%" id="Audio1">--%>
-    <%--        <source src="http://localhost:8080/file/wav" type="audio/wav" />--%>
-    <%--&lt;%&ndash;        <source src="http://localhost:8080/file/wav" type="audio/ogg" />&ndash;%&gt;--%>
-    <%--&lt;%&ndash;        <source src="http://www.w3schools.com/html/horse.mp3" type="audio/mpeg" />&ndash;%&gt;--%>
-    <%--&lt;%&ndash;        <a href="http://www.w3schools.com/html/horse.mp3">horse</a>&ndash;%&gt;--%>
-    <%--    </audio>--%>
-    <%--</div>--%>
+
 
 </div>
 
@@ -127,10 +113,11 @@
     //todo 增加png支持
     var data = [
         { text: "   ", value: "0" },
-        { text: "Vassily Kandinsky,1923 - Composition 8, huile sur toile,Musée Guggenheim", value: "37025235-6ea3-4c16-a234-71c5b80f4a9e" },
-        { text: "Vassily Kandinsky,1923 - On White II", value: "2c7211e2-c28e-4afa-8102-d72f99176c13" },
-        { text: "Vassily Kandinsky,1923 - Circles in a Circle", value: "14c8817c-cfd4-406e-9c32-2ee6af5a76c5" },
-        { text: "My self-portrait", value: "ce1816c8-858b-44b1-ac08-23030c7e9a10" }
+        { text: "Vassily Kandinsky,1923 - Composition 8, huile sur toile,Musée Guggenheim", value: "37025235-6ea3-4c16-a234-71c5b80f4a9e.jpg" },
+        { text: "Vassily Kandinsky,1923 - On White II", value: "2c7211e2-c28e-4afa-8102-d72f99176c13.jpg" },
+        { text: "Vassily Kandinsky,1923 - Circles in a Circle", value: "14c8817c-cfd4-406e-9c32-2ee6af5a76c5.jpg" },
+        { text: "My self-portrait", value: "ce1816c8-858b-44b1-ac08-23030c7e9a10.jpg" },
+        { text: "Just listen", value: "63b02862-e968-44b1-a71e-744dfff4048c.png" }
     ];
 
     $(document).ready(function() {
@@ -155,15 +142,17 @@
                     $("#photo").data("kendoUpload").removeAllFiles();
 
                     setTimeout(function () {
-                        $("#img1").attr("src", "/images/"+value+".jpg");
-                        showMidiPlayer("/images/"+value+".midi");
+                        $("#img1").attr("src", "/images/"+value);
+                        var midiFilename = value.split('.').slice(0, -1).join('.') + ".midi"
+
+                        showMidiPlayer("/images/"+midiFilename);
                     },100);
                 }
 
             },
         });
 
-        //$("#Audio1").hide();
+
         clearMidiPlayer();
 
         $("#photo").kendoUpload({
@@ -182,8 +171,6 @@
             select: function(e) {
                 var fileInfo = e.files[0];
                 var wrapper = this.wrapper;
-                // $("#Audio1").hide();
-                // $("#Audio1").trigger("pause");
                 var dropdownlist = $("#painting").data("kendoDropDownList");
                 dropdownlist.value("0");
 
@@ -195,21 +182,14 @@
                 });
             },
             remove: function(e) {
-                // $("#Audio1").hide();
-                // $("#Audio1").trigger("pause");
 
                 clearMidiPlayer();
-                //$("#midiPlayer1").trigger("pause");
 
                 setTimeout(function () {
                     $("#img1").attr("src", "");
                 });
             },
             clear: function(e) {
-                // $("#Audio1").hide();
-                // $("#Audio1").trigger("pause");
-                //$("#midiPlayer1").hide();
-                //$("#midiPlayer1").trigger("pause");
 
                 clearMidiPlayer();
 
@@ -224,8 +204,6 @@
             },
 
             error: function(e) {
-                // $("#Audio1").hide();
-                // $("#Audio1").trigger("pause");
                 clearMidiPlayer();
                 setTimeout(function () {
                     $("#img1").attr("src", "");
@@ -236,8 +214,6 @@
             },
 
             progress: function(e) {
-                // $("#Audio1").hide();
-                // $("#Audio1").trigger("pause");
                 //kendoConsole.log("Upload progress :: " + e.percentComplete + "% :: " + getFileInfo(e));
             },
 
@@ -246,29 +222,9 @@
                     var filename=newFileName;
                     var midiFilename = newFileName + ".midi"
 
-                    //var filename = e.files[0].name;
-                    // var wavFilename = filename.split('.').slice(0, -1).join('.') + ".wav"
-                    //var midiFilename = filename.split('.').slice(0, -1).join('.') + ".midi"
-                    //console.log("Success:" + wavFilename);
                     console.log("Success:" + midiFilename);
-                    //var fileUrl2 = "/file/wav?file=" + wavFilename;
                     var fileUrl3 = "/file/midi?file=" + midiFilename;
                     startMidiPlayer(fileUrl3);
-
-                    //showMidiPlayer(fileUrl3);
-
-                    // $("#Audio1").attr("src", fileUrl2).trigger("play");
-                    // $("#Audio1").show();
-
-
-
-                    // var player = $("#midiPlayer1");
-
-
-                    // $("#midiPlayer1").attr("src", fileUrl3);
-                    //player.src = fileUrl3;
-                    // player.show();
-                    //$("#staffVisualizer1").attr("src", fileUrl3);
                 }
             },
 
