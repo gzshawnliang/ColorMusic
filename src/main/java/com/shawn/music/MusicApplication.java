@@ -1,15 +1,15 @@
-package com.example.springdemo;
+package com.shawn.music;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class SpringDemoApplication {
+public class MusicApplication {
 
     public static void main(String[] args)
     {
-        SpringApplication.run(SpringDemoApplication.class, args);
+        SpringApplication.run(MusicApplication.class, args);
     }
 
 }

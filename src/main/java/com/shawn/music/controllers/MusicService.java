@@ -1,12 +1,9 @@
-package com.example.springdemo.controllers;
+package com.shawn.music.controllers;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import java.util.*;
@@ -14,14 +11,11 @@ import java.util.*;
 import org.jfugue.midi.MidiFileManager;
 import org.jfugue.pattern.Pattern;
 import org.jfugue.player.Player;
-import org.jfugue.rhythm.Rhythm;
 
 import javax.imageio.ImageIO;
 
 import javax.sound.sampled.*;
-import java.io.*;
 import java.util.List;
-import java.util.Vector;
 
 class Pair {
     int x;

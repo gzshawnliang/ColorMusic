@@ -1,4 +1,4 @@
-package com.example.springdemo.controllers;
+package com.shawn.music.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
