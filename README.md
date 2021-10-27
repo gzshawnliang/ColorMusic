@@ -1,6 +1,6 @@
 # Color Music
 
-In the developing...
+In development.
 <br>
 
 [demo](https://music.shawnliang.wiki)
