@@ -24,12 +24,10 @@
 
     <link href="/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
     <link href="/styles/kendo.material.min.css" rel="stylesheet" type="text/css" />
-<%--    <link href="/styles/bootstrap-player.css" rel="stylesheet">--%>
 
     <script src="/js/jquery.min.js"></script>
     <script src="/js/kendo.web.min.js"></script>
 
-<%--    <script src="/js/bootstrap-player.js"></script>--%>
     <script src="/js/html-midi-player@1.4.0.js"></script>
 
 
