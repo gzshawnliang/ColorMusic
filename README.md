@@ -1,4 +1,4 @@
-# Color Music
+# Kandinsky Reimagined
 
 In development.
 <br>

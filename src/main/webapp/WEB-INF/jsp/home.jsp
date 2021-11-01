@@ -20,7 +20,7 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
-    <title>Color Music</title>
+    <title>Kandinsky Reimagined</title>
 
     <link href="/styles/kendo.common.min.css" rel="stylesheet" type="text/css" />
     <link href="/styles/kendo.material.min.css" rel="stylesheet" type="text/css" />
