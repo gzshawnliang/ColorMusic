@@ -1,4 +1,4 @@
-# Kandinsky Reimagined
+#![](src/main/resources/static/favicon-32x32.png) Kandinsky Reimagined
 
 In development.
 <br>
