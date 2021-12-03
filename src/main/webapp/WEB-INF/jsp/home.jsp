@@ -34,7 +34,14 @@
 </head>
 <body>
 <div>
-    <p>Select the painting
+
+    <div style="font-size: 1.3em;font-weight: bold;display: flex;">
+        <img src="/favicon-32x32.png" style="margin-right: 8px;">
+        Kandinsky Reimagined
+    </div>
+
+    <p>
+        <div style="font-weight: bold;">Select the painting</div>
         <input id="painting" value="1" style="width: 100%;" />
     </p>
 
